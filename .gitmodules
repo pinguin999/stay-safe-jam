@@ -1,0 +1,9 @@
+[submodule "subprojects/jngl"]
+	path = subprojects/jngl
+	url = https://gitlab.com/jhasse/jngl.git
+[submodule "subprojects/Box2D"]
+	path = subprojects/Box2D
+	url = https://github.com/jschmold/Box2D.git
+[submodule "subprojects/cereal"]
+	path = subprojects/cereal
+	url = https://github.com/USCiLab/cereal.git

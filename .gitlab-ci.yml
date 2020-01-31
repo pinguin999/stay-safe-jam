@@ -1,0 +1,29 @@
+image: jhasse/jngl
+
+linux:
+  stage: build
+  script:
+    - git submodule update --init subprojects/jngl subprojects/cereal subprojects/Box2D
+    - mkdir build
+    - cd build
+    - cmake -GNinja ..
+    - TERM=xterm script -qfec "ninja" /dev/null
+    - cd ..
+    - rm -rf build
+    - mkdir build
+    - cd build
+    - CC=clang CXX=clang++ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -GNinja ..
+    - TERM=xterm script -qfec "ninja" /dev/null
+    - cd ..
+    - TERM=xterm script -qfec "python3 /usr/share/clang/run-clang-tidy.py $PWD/src -p build 2>/dev/null" | sed s_$PWD/__
+    - '! grep -Fq "error:" typescript'
+
+windows:
+  stage: build
+  image: registry.fedoraproject.org/fedora-minimal:31
+  script:
+    - microdnf install cmake ninja-build mingw64-pkg-config mingw64-libvorbis mingw64-SDL2 mingw64-fontconfig mingw64-libwebp mingw64-boost mingw64-dlfcn mingw64-libepoxy mingw64-openal-soft >/dev/null
+    - mingw64-cmake -Bbuild-windows -H. -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0
+    - ninja -Cbuild-windows
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
