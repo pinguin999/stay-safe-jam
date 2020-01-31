@@ -1,8 +1,9 @@
 #pragma once
 
 #include <Box2D/Box2D.h>
-#include <set>
 #include <jngl/work.hpp>
+#include <set>
+#include <vector>
 
 class Animation;
 class GameObject;
