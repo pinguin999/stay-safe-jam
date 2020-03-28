@@ -80,7 +80,7 @@ bool Player::step() {
 	}
 
 	checkOutOfScreen();
-	jngl::Vec2 vec = control->getMovement() * 0.8;
+	jngl::Vec2 vec = control->getMovement() * 4;
 
 	body->SetLinearVelocity(b2Vec2(vec.x, vec.y));
 
