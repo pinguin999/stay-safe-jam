@@ -49,10 +49,6 @@ Player::Player(b2World& world, const jngl::Vec2 position, const int playerNr)
 	shadow.setCenter(0, 10);
 	crown.setCenter(0, -15);
 
-	// Dann kriegt man nach 5 zufällige Fragmente - AUFS HAUS!
-	// Hier 23 einsetzen damit nur noch ein Fragment eingesammelt werden muss.
-	int fragmentsAdded = 0;
-
 }
 
 Player::~Player() {
@@ -86,10 +82,6 @@ bool Player::step() {
 	checkOutOfScreen();
 	jngl::Vec2 vec = control->getMovement() * 0.8;
 
-	if (dashCountdown > 0) {
-		--dashCountdown;
-		vec *= 4;
-	}
 	body->SetLinearVelocity(b2Vec2(vec.x, vec.y));
 
 	time += float(90 + (rand() % 10)) / 1000.f;
