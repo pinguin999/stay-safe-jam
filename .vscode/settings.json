@@ -94,5 +94,14 @@
 		"cinttypes": "cpp"
 	},
 	"cquery.cacheDirectory": "${workspaceFolder}/.vscode/cquery_cached_index/",
-	"C_Cpp.errorSquiggles": "Disabled"
+	"C_Cpp.errorSquiggles": "Disabled",
+	
+	"terminal.integrated.shell.windows": "C:\\msys64\\usr\\bin\\bash.exe",
+	"terminal.integrated.shellArgs.windows": [
+    "--login",
+	],
+	"terminal.integrated.env.windows": {
+    "CHERE_INVOKING": "1",
+    "MSYSTEM": "MINGW64",
+	},
 }
