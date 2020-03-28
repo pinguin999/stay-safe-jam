@@ -121,7 +121,7 @@ void Player::shoot() {
 void Player::draw() const {
 	jngl::pushMatrix();
 	jngl::translate(getPosition());
-	shadow.draw();
+//	shadow.draw();
 	if (playerNr == 0) {
 		jngl::setSpriteColor(51, 255, 51);
 	} else if (playerNr == 1) {
@@ -137,11 +137,11 @@ void Player::draw() const {
 	{
 		jngl::pushMatrix();
 		jngl::translate(0, 6);
-		if (alive && body->GetLinearVelocity().LengthSquared() > 0.1) {
-			walk.draw();
-		} else {
-			idle.draw();
-		}
+//		if (alive && body->GetLinearVelocity().LengthSquared() > 0.1) {
+//			walk.draw();
+//		} else {
+//			idle.draw();
+//		}
 		if (shield_active) {
 			animation_shield.draw();
 		}
@@ -157,7 +157,12 @@ void Player::draw() const {
 	if (!alive || stun_time > 0) {
 		spriteStunned.draw();
 	} else {
-		jngl::rotate(float(rotvec.x*-90));
+		if (rotvec.y < 0){
+			jngl::rotate(float(180));
+			jngl::rotate(float(rotvec.x*90));
+		}else{
+			jngl::rotate(float(rotvec.x*-90));
+		}
 		sprite.draw();
 	}
 	if (isKing())
