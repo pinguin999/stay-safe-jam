@@ -6,6 +6,7 @@
 #include "engine/Sprite.hpp"
 #include "GameObject.hpp"
 #include "Player.hpp"
+#include "House.hpp"
 
 #include <cmath>
 #include <jngl.hpp>
@@ -31,6 +32,11 @@ Game::Game()
 	ground->CreateFixture(&fixtureDef);
 
 	gameObjects.emplace_back(std::make_shared<Player>(world, jngl::Vec2(-100, 100), 1));
+
+	gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(-100, 0)));
+	gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(100, 0)));
+	gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(0, 100)));
+	gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(0, -100)));
 
 }
 
