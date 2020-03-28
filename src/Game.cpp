@@ -11,7 +11,7 @@
 #include <jngl.hpp>
 
 Game::Game()
-: world({ 0, 9.8 /* gravity */ }),
+: world({ 0, 0 }),
   groundPosition(pixelToMeter({ 0, GROUND + PIXEL_PER_METER })) {
 
 	b2BodyDef bodyDef;
