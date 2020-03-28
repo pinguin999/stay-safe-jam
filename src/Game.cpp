@@ -41,6 +41,7 @@ void Game::onLoad() {
 }
 
 void Game::step() {
+	world.Step((1.f / 60.f), 8, 3);
 
 	for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it) {
 		if ((*it)->step() || (*it)->getPosition().y > 1000) {
