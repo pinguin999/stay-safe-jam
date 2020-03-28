@@ -2,6 +2,8 @@
 
 #include "../constants.hpp"
 
+#include <sstream>
+
 #if defined(__linux__)
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
@@ -10,8 +12,8 @@ namespace fs = std::experimental::filesystem;
 #include <mach-o/dyld.h>
 #include <CoreServices/CoreServices.h>
 #endif
-#include <boost/filesystem.hpp>
-namespace fs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 #else
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -38,7 +40,11 @@ Paths::Paths() {
 	applicationSupportFolder /= programDisplayName;
 	configPath = applicationSupportFolder.string() + "/";
 #else
-	fs::current_path(fs::path(jngl::getBinaryPath()) / fs::path("../data"));
+	auto dataFolder = fs::path(jngl::getBinaryPath()) / fs::path("../data");
+	if (!fs::exists(dataFolder)) {
+		dataFolder = fs::path(jngl::getBinaryPath()) / fs::path("../../data");
+	}
+	fs::current_path(dataFolder);
 
 	TCHAR szPath[MAX_PATH];
 	if (!SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA | CSIDL_FLAG_CREATE, NULL, 0, szPath))) {

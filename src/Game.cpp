@@ -5,6 +5,7 @@
 #include "engine/Fade.hpp"
 #include "engine/Sprite.hpp"
 #include "GameObject.hpp"
+#include "Player.hpp"
 
 #include <cmath>
 #include <jngl.hpp>
@@ -28,6 +29,9 @@ Game::Game()
 	fixtureDef.filter.categoryBits = FILTER_CATEGORY_SOLID_OBJECT;
 	fixtureDef.filter.maskBits = 0xffff;
 	ground->CreateFixture(&fixtureDef);
+
+	gameObjects.emplace_back(std::make_shared<Player>(world, jngl::Vec2(-100, 100), 1));
+
 }
 
 Game::~Game() = default;
@@ -68,7 +72,7 @@ void Game::step() {
 
 void Game::draw() const {
 	for (auto& gameObject : gameObjects) {
-		gameObject->draw(false, 1);
+		gameObject->draw();
 	}
 	for (auto& animation : animations) {
 		animation->draw();

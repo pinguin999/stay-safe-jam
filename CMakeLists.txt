@@ -6,9 +6,13 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fdiagnostics-color")
 
 add_subdirectory(subprojects/jngl)
+
+set(BOX2D_BUILD_TESTBED OFF CACHE BOOL "Build the Box2D testbed" FORCE)
 add_subdirectory(subprojects/Box2D)
 
-file(GLOB SOURCES
+add_subdirectory(subprojects/spine-runtimes/spine-c)
+
+file(GLOB SOURCES CONFIGURE_DEPENDS
 	src/*.cpp
 	src/engine/*.cpp
 	src/engine/effects/*.cpp
@@ -60,9 +64,13 @@ if(ANDROID)
 		native_app_glue
 		log)
 else()
-	add_executable(ggj2020 ${SOURCES})
+	if(WIN32)
+		set_source_files_properties(windows/main.rc PROPERTIES LANGUAGE RC)
+		add_executable(ggj2020 ${SOURCES} windows/main.rc)
+	else()
+		add_executable(ggj2020 ${SOURCES})
+	endif()
 	if(APPLE)
-		find_package(Boost COMPONENTS filesystem)
 		target_link_libraries(ggj2020 PRIVATE "-framework AppKit")
 	elseif(NOT WIN32)
 		target_link_libraries(ggj2020 PRIVATE
@@ -70,15 +78,22 @@ else()
 		)
 	endif()
 	target_link_libraries(ggj2020 PRIVATE
-		${Boost_LIBRARIES} jngl box2d
+		jngl box2d
+		spine-c
 	)
 endif()
 
-file(GLOB GFX_FILES RELATIVE ${CMAKE_SOURCE_DIR}/data data/gfx/*.webp data/gfx/*.png
-                                                      data/gfx/*/*.webp data/gfx/*/*.png)
+file(GLOB GFX_FILES RELATIVE ${CMAKE_SOURCE_DIR}/data CONFIGURE_DEPENDS data/*.webp data/*.png
+                                                                        data/*/*.webp)
 file(GLOB SFX_FILES RELATIVE ${CMAKE_SOURCE_DIR}/data data/sfx/*.ogg)
 configure_file(src/engine/datafiles.hpp.in include/datafiles.hpp @ONLY)
-target_include_directories(ggj2020 PRIVATE ${CMAKE_BINARY_DIR}/include subprojects/cereal/include)
+target_include_directories(ggj2020 PRIVATE ${CMAKE_BINARY_DIR}/include subprojects/cereal/include
+										   subprojects/spine-runtimes/spine-c/spine-c/include
+										   )
+
+if(WIN32)
+	target_compile_definitions(ggj2020 PRIVATE _USE_MATH_DEFINES)
+endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
 	set_target_properties(ggj2020 PROPERTIES WIN32_EXECUTABLE 1)

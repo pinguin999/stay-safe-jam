@@ -7,7 +7,7 @@ class Draw;
 
 class Animation {
 public:
-	Animation(const std::string& foldername, unsigned int canon = 1, bool repeat = true);
+	Animation(const std::string& foldername, bool repeat = true);
 	Animation(const Animation&) = delete;
 	void draw() const;
 
@@ -21,6 +21,8 @@ public:
 
 	void setPosition(jngl::Vec2);
 
+	void reset();
+
 private:
 	std::string foldername_;
 	int stepsPerFrame_;
@@ -30,6 +32,5 @@ private:
 	int stepsLeft_;
 	std::string CreateFilename(int) const;
 	bool repeat;
-	const unsigned int canon;
 	jngl::Vec2 position;
 };

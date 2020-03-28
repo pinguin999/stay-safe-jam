@@ -3,12 +3,11 @@
 #include "../Game.hpp"
 
 #include <fstream>
-#include <iomanip>
 #include <jngl.hpp>
+#include <iomanip>
 
-Animation::Animation(const std::string& foldername, unsigned int canon, const bool repeat)
-: foldername_("gfx/" + foldername + "/"), finished_(false), stepsLeft_(0), repeat(repeat),
-  canon(canon) {
+Animation::Animation(const std::string& foldername, const bool repeat)
+: foldername_(foldername + "/"), finished_(false), stepsLeft_(0), repeat(repeat) {
 	std::string filename(jngl::getPrefix() + foldername_ + "frames.txt");
 	std::ifstream fin(filename);
 	if (!fin) {
@@ -53,15 +52,9 @@ std::string Animation::CreateFilename(int frameNumber) const {
 
 void Animation::draw() const {
 	if (!finished_) {
-		for (unsigned int i = 0; i < canon; ++i) {
-			const unsigned int offset = (i * numberOfFrames / canon);
-			if (currentFrame < offset) {
-				break;
-			}
-			const auto f = CreateFilename(currentFrame + offset);
-			jngl::draw(f, position.x - jngl::getWidth(f) / 2.,
-			           position.y - jngl::getHeight(f) / 2.);
-		}
+		const auto f = CreateFilename(currentFrame);
+		jngl::draw(f, position.x - jngl::getWidth(f) / 2.,
+		           position.y - jngl::getHeight(f) / 2.);
 	}
 }
 
@@ -90,4 +83,10 @@ bool Animation::step() {
 
 bool Animation::Finished() {
 	return finished_;
+}
+
+void Animation::reset() {
+	finished_ = false;
+	stepsLeft_ = stepsPerFrame_;
+	currentFrame = 0;
 }

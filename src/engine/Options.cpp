@@ -4,7 +4,6 @@
 
 #include <cereal/archives/json.hpp>
 #include <fstream>
-#include <iostream>
 #include <jngl/all.hpp>
 
 Options::Options()

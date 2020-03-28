@@ -2,8 +2,8 @@
 
 #include "../Game.hpp"
 #include "effects/Effect.hpp"
-
 #include <jngl.hpp>
+
 
 Sprite::Sprite(jngl::Vec2 position) : position(position) {
 }
