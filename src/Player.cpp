@@ -6,7 +6,7 @@
 #include <cmath>
 
 Player::Player(b2World& world, const jngl::Vec2 position, const int playerNr)
-: playerNr(playerNr), sprite("player" + std::to_string(playerNr)),
+: playerNr(playerNr), sprite("car"),
   spriteStunned("player" + std::to_string(playerNr) + "_stunn"), shadow("shadow"),
   idle("body_idle"), walk("body_walk", true), animation_shield("shield", true),
   animation_attack("attack", false), shield_active(false), crown("crown") {
