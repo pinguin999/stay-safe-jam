@@ -52,13 +52,7 @@ Player::Player(b2World& world, const jngl::Vec2 position, const int playerNr)
 	// Dann kriegt man nach 5 zufällige Fragmente - AUFS HAUS!
 	// Hier 23 einsetzen damit nur noch ein Fragment eingesammelt werden muss.
 	int fragmentsAdded = 0;
-#ifdef NDEBUG
-	while (fragmentsAdded < 5) {
-#else
-	while (fragmentsAdded < 23) {
-#endif
 
-	}
 }
 
 Player::~Player() {
