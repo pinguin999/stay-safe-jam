@@ -7,3 +7,6 @@
 [submodule "subprojects/cereal"]
 	path = subprojects/cereal
 	url = https://github.com/USCiLab/cereal.git
+[submodule "subprojects/spine-runtimes"]
+	path = subprojects/spine-runtimes
+	url = https://github.com/EsotericSoftware/spine-runtimes
