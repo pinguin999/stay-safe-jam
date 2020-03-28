@@ -151,11 +151,13 @@ void Player::draw() const {
 
 		jngl::popMatrix();
 	}
+	jngl::Vec2 rotvec = control->getMovement();
 	jngl::setSpriteColor(255, 255, 255);
 	jngl::translate(-jngl::Vec2(0, 8 + (alive ? std::sin(time) : 0)));
 	if (!alive || stun_time > 0) {
 		spriteStunned.draw();
 	} else {
+		jngl::rotate(float(rotvec.x*-90));
 		sprite.draw();
 	}
 	if (isKing())
