@@ -32,9 +32,6 @@ Game::Game()
 	fixtureDef.filter.maskBits = 0xffff;
 	ground->CreateFixture(&fixtureDef);
 
-	gameObjects.emplace_back(std::make_shared<Player>(world, jngl::Vec2(-300, 300), 1));
-	gameObjects.emplace_back(std::make_shared<ToiletPaper>(world, jngl::Vec2(-250, 250)));
-
 	int streets[4] = {-330, -100, 100, 330};
 	for(int i = 0; i < 4; i++) {
 		// oben rechts
@@ -54,6 +51,10 @@ Game::Game()
 		// oben rechts
 		gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(650, streets[i])));
 	}
+
+	gameObjects.emplace_back(std::make_shared<Player>(world, jngl::Vec2(-300, 300), 1));
+	gameObjects.emplace_back(std::make_shared<ToiletPaper>(world, jngl::Vec2(-250, 250)));
+
 }
 
 Game::~Game() = default;
