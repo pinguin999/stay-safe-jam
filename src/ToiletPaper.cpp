@@ -1,5 +1,6 @@
 #include "ToiletPaper.hpp"
 #include "constants.hpp"
+#include "Player.hpp"
 
 ToiletPaper::ToiletPaper(b2World& world, const jngl::Vec2 position) {
 	b2BodyDef bodyDef;
@@ -9,11 +10,20 @@ ToiletPaper::ToiletPaper(b2World& world, const jngl::Vec2 position) {
 	body->SetLinearDamping(10.f);
 	body->SetAngularDamping(10);
 
-	body->SetUserData(static_cast<GameObject*>(this));
+	b2CircleShape shape = b2CircleShape();
+	shape.m_radius = pixelToMeter(25);
+	b2FixtureDef fixtureDef;
+	fixtureDef.isSensor = true;
+	fixtureDef.shape = &shape;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.7f;
+	fixtureDef.restitution = 0.1f;
+	fixtureDef.filter.categoryBits = FILTER_CATEGORY_SOLID_OBJECT;
+	fixtureDef.filter.maskBits = 0xffff;
+	body->CreateFixture(&fixtureDef);
+	body->SetGravityScale(1);
+    createFixtureFromShape(shape);
 
-	b2PolygonShape shape;
-	shape.SetAsBox(28. / PIXEL_PER_METER, 28. / PIXEL_PER_METER);
-	createFixtureFromShape(shape);
 }
 
 bool ToiletPaper::step() {
@@ -31,9 +41,8 @@ void ToiletPaper::draw() const {
 }
 
 void ToiletPaper::onContact(GameObject* other){
-	if(const auto punch = dynamic_cast<ToiletPaper*>(other)) {
-		b2Vec2 vec = body->GetPosition() - pixelToMeter(punch->getPosition());
-		body->ApplyLinearImpulse(vec, body->GetPosition(), true);
+	if (const auto player = dynamic_cast<Player*>(other)) {
+		body->GetWorld()->DestroyBody(body);
 	}
 }
 
