@@ -33,7 +33,7 @@ Game::Game()
 	ground->CreateFixture(&fixtureDef);
 
 	gameObjects.emplace_back(std::make_shared<Player>(world, jngl::Vec2(-300, 300), 1));
-	gameObjects.emplace_back(std::make_shared<ToiletPaper>(world, jngl::Vec2(-250, 250)));
+	gameObjects.emplace_back(std::make_shared<ToiletPaper>(world, jngl::Vec2(-300, 200)));
 
 	int streets[4] = {-330, -100, 100, 330};
 	for(int i = 0; i < 4; i++) {
