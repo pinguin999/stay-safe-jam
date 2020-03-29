@@ -33,11 +33,25 @@ Game::Game()
 
 	gameObjects.emplace_back(std::make_shared<Player>(world, jngl::Vec2(-100, 100), 1));
 
-	gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(-100, 0)));
-	gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(100, 0)));
-	gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(0, 100)));
-	gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(0, -100)));
+	int streets[4] = {-330, -100, 100, 330};
+	for(int i = 0; i < 4; i++) {
+		// oben rechts
+		gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(-650, streets[i])));
+		gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(-550, streets[i])));
+		gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(-450, streets[i])));
 
+		// oben mitte
+		gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(-200, streets[i])));
+		gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(-100, streets[i])));
+		gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(0, streets[i])));
+		gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(100, streets[i])));
+		gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(200, streets[i])));
+		gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(300, streets[i])));
+		gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(400, streets[i])));
+
+		// oben rechts
+		gameObjects.emplace_back(std::make_shared<House>(world, jngl::Vec2(650, streets[i])));
+	}
 }
 
 Game::~Game() = default;
