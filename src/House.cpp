@@ -12,7 +12,7 @@ House::House(b2World& world, const jngl::Vec2 position) {
 	body->SetUserData(static_cast<GameObject*>(this));
 
 	b2PolygonShape shape;
-	shape.SetAsBox(64. / PIXEL_PER_METER / 2., 64. / PIXEL_PER_METER / 2.);
+	shape.SetAsBox(64. / PIXEL_PER_METER, 80. / PIXEL_PER_METER);
 	createFixtureFromShape(shape);
 }
 

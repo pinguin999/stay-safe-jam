@@ -78,6 +78,7 @@ void Game::step() {
 }
 
 void Game::draw() const {
+	background.draw();
 	for (auto& gameObject : gameObjects) {
 		gameObject->draw();
 	}

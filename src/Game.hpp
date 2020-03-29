@@ -4,6 +4,7 @@
 #include <jngl/work.hpp>
 #include <set>
 #include <vector>
+#include <jngl.hpp>
 
 class Animation;
 class GameObject;
@@ -35,4 +36,5 @@ private:
 
 	b2Body* ground;
 	const b2Vec2 groundPosition;
+	jngl::Sprite background{"background"};
 };
